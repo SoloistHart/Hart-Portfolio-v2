@@ -1,4 +1,6 @@
 import { Reveal } from "../Reveal";
+import { AnimatedText } from "../AnimatedText";
+import { Parallax } from "../Parallax";
 import { future } from "../../data/journey";
 
 export function Future() {
@@ -8,25 +10,31 @@ export function Future() {
       className="chapter items-start justify-center"
     >
       <Reveal>
-        <p className="eyebrow mb-4">{future.eyebrow}</p>
-      </Reveal>
-      <Reveal delay={0.05}>
-        <h2 className="chapter-title mb-6 max-w-3xl">{future.title}</h2>
-      </Reveal>
-      <Reveal delay={0.1}>
-        <p className="lede mb-12">{future.lede}</p>
+        <p className="eyebrow mb-4">05 — {future.label}</p>
       </Reveal>
 
-      <Reveal delay={0.16}>
-        <div className="panel max-w-xl">
-          <p className="mb-5 font-display text-2xl font-semibold text-white">
-            {future.contact.cta}
-          </p>
+      <AnimatedText
+        as="h2"
+        text={future.title}
+        className="chapter-title"
+        stagger={0.08}
+      />
+      <Parallax amount={30}>
+        <AnimatedText
+          as="p"
+          text={future.subtitle}
+          className="mt-2 font-display text-2xl text-slate-400 sm:text-3xl"
+          stagger={0.05}
+        />
+      </Parallax>
+
+      <Reveal delay={0.2}>
+        <div className="mt-14 flex flex-col gap-5">
           <a
             href={`mailto:${future.contact.email}`}
-            className="mb-6 inline-block font-mono text-lg text-curiosity underline-offset-4 hover:underline"
+            className="font-display text-xl text-white underline-offset-4 hover:text-curiosity hover:underline sm:text-2xl"
           >
-            {future.contact.email}
+            {future.contact.cta}
           </a>
           <div className="flex flex-wrap gap-3">
             {future.contact.links.map((link) => (
@@ -42,12 +50,6 @@ export function Future() {
             ))}
           </div>
         </div>
-      </Reveal>
-
-      <Reveal delay={0.24}>
-        <p className="mt-16 font-mono text-xs uppercase tracking-widest text-slate-500">
-          The network continues beyond what is visible.
-        </p>
       </Reveal>
     </section>
   );

@@ -1,26 +1,32 @@
 import { Reveal } from "../Reveal";
+import { AnimatedText } from "../AnimatedText";
+import { Parallax } from "../Parallax";
 import { impact } from "../../data/journey";
 
 export function Impact() {
   return (
     <section id="chapter-impact" className="chapter">
       <Reveal>
-        <p className="eyebrow mb-4">{impact.eyebrow}</p>
-      </Reveal>
-      <Reveal delay={0.05}>
-        <h2 className="chapter-title mb-6 max-w-3xl">{impact.title}</h2>
-      </Reveal>
-      <Reveal delay={0.1}>
-        <p className="lede mb-14">{impact.lede}</p>
+        <p className="eyebrow mb-4">04 — {impact.label}</p>
       </Reveal>
 
-      <div className="grid gap-5 sm:grid-cols-2">
+      <AnimatedText
+        as="h2"
+        text={impact.title}
+        className="chapter-title mb-16 max-w-3xl"
+      />
+
+      <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
         {impact.statements.map((s, i) => (
-          <Reveal key={s.audience} delay={0.05 * i} className="panel">
-            <p className="mb-2 font-display text-xl font-semibold text-impact">
-              {s.audience}
-            </p>
-            <p className="text-slate-200">{s.promise}</p>
+          <Reveal key={s.audience} delay={i * 0.07}>
+            <Parallax amount={16 + i * 12}>
+              <div className="flex items-baseline gap-4">
+                <span className="font-display text-3xl font-bold text-impact sm:text-4xl">
+                  {s.audience}
+                </span>
+                <span className="text-slate-300">{s.promise}</span>
+              </div>
+            </Parallax>
           </Reveal>
         ))}
       </div>

@@ -5,7 +5,7 @@ export function Intro() {
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setHidden(true), 1400);
+    const timer = window.setTimeout(() => setHidden(true), 900);
     return () => window.clearTimeout(timer);
   }, []);
 

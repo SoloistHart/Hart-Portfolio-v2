@@ -9,11 +9,13 @@ import { Impact } from "./components/chapters/Impact";
 import { Future } from "./components/chapters/Future";
 import { useDeviceCapability } from "./hooks/useDeviceCapability";
 import { useScrollProgress } from "./hooks/useScrollProgress";
+import { useSmoothScroll } from "./hooks/useSmoothScroll";
 import { hero } from "./data/journey";
 
 export default function App() {
   const capability = useDeviceCapability();
   const activeChapter = useScrollProgress();
+  useSmoothScroll(!capability.prefersReducedMotion);
 
   return (
     <div className="vignette relative">
@@ -41,7 +43,7 @@ export default function App() {
 
         <Reveal as="footer" className="px-6 pb-10 text-center sm:px-10">
           <p className="font-mono text-[10px] uppercase tracking-widest text-slate-600">
-            Built as a system, not a slideshow · {new Date().getFullYear()}
+            {hero.name} · {new Date().getFullYear()}
           </p>
         </Reveal>
       </main>

@@ -1,72 +1,54 @@
 import { Reveal } from "../Reveal";
+import { AnimatedText } from "../AnimatedText";
+import { Parallax } from "../Parallax";
 import { systems } from "../../data/journey";
-
-const FLOW = ["Problem", "Thinking", "Architecture", "Outcome"] as const;
 
 export function Systems() {
   return (
     <section id="chapter-systems" className="chapter">
       <Reveal>
-        <p className="eyebrow mb-4">{systems.eyebrow}</p>
+        <p className="eyebrow mb-4">03 — {systems.label}</p>
       </Reveal>
-      <Reveal delay={0.05}>
-        <h2 className="chapter-title mb-6">{systems.title}</h2>
-      </Reveal>
+
+      <AnimatedText
+        as="h2"
+        text={systems.title}
+        className="chapter-title mb-10 max-w-3xl"
+      />
+
       <Reveal delay={0.1}>
-        <p className="lede mb-14">{systems.lede}</p>
+        <div className="mb-12 flex flex-wrap items-center gap-x-3 gap-y-2">
+          {systems.flow.map((step, i) => (
+            <span key={step} className="flex items-center gap-3">
+              <span className="font-mono text-xs uppercase tracking-widest text-systems">
+                {step}
+              </span>
+              {i < systems.flow.length - 1 && (
+                <span className="text-slate-600">→</span>
+              )}
+            </span>
+          ))}
+        </div>
       </Reveal>
 
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-5">
         {systems.projects.map((project, i) => (
-          <Reveal as="article" key={project.name} delay={0.04 * i} className="panel">
-            <header className="mb-5 flex items-center justify-between gap-4">
-              <h3 className="font-display text-2xl font-semibold text-white">
-                {project.name}
-              </h3>
-              <span className="hidden font-mono text-xs uppercase tracking-widest text-systems sm:block">
-                {FLOW.join(" → ")}
-              </span>
-            </header>
-
-            <dl className="grid gap-5 sm:grid-cols-2">
-              <Field label="Problem" value={project.problem} accent="text-impact" />
-              <Field label="Thinking" value={project.thinking} accent="text-curiosity" />
-              <Field
-                label="Architecture"
-                value={project.architecture}
-                accent="text-systems"
-                mono
-              />
-              <Field label="Outcome" value={project.outcome} accent="text-emerald-300" />
-            </dl>
+          <Reveal key={project.name} delay={i * 0.05}>
+            <Parallax amount={26}>
+              <article className="panel flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <h3 className="font-display text-2xl font-semibold text-white">
+                  {project.name}
+                </h3>
+                <p className="font-mono text-sm text-slate-400">
+                  <span className="text-impact">{project.problem}</span>
+                  <span className="mx-2 text-slate-600">→</span>
+                  <span className="text-emerald-300">{project.outcome}</span>
+                </p>
+              </article>
+            </Parallax>
           </Reveal>
         ))}
       </div>
     </section>
-  );
-}
-
-function Field({
-  label,
-  value,
-  accent,
-  mono = false,
-}: {
-  label: string;
-  value: string;
-  accent: string;
-  mono?: boolean;
-}) {
-  return (
-    <div>
-      <dt className={`flow-step mb-1 ${accent}`}>{label}</dt>
-      <dd
-        className={`text-sm leading-relaxed text-slate-300 ${
-          mono ? "font-mono text-[13px] text-slate-400" : ""
-        }`}
-      >
-        {value}
-      </dd>
-    </div>
   );
 }
