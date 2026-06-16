@@ -42,6 +42,30 @@ npm run lint
 
 This is a fully client-side app — no backend, database, or required secrets. Optional Vite environment variables (prefixed `VITE_`) can be documented in `.env.example`.
 
+## Deployment (GitHub Pages)
+
+The app is a static site and is configured to deploy to GitHub Pages at:
+
+```
+https://soloisthart.github.io/Hart-Portfolio-v2/
+```
+
+> GitHub Pages serves project sites under `/<repo>/`, so production builds use
+> `base: /Hart-Portfolio-v2/` (see `vite.config.ts`). Override with the
+> `BASE_PATH` env var for a custom domain or different repo name.
+
+Two ways to publish:
+
+- **Automatic (recommended):** push/merge to `main`. The workflow in
+  `.github/workflows/deploy.yml` builds and publishes to Pages on every push to
+  the default branch.
+- **Prebuilt branch (no CI needed):** the `cursor/gh-pages-143a` branch contains
+  a ready-to-serve build. In **Settings → Pages**, choose
+  **Deploy from a branch → `cursor/gh-pages-143a` → `/ (root)`**.
+
+> Note: Pages requires the repository to be **public** (free plan) or a paid
+> plan for private repos.
+
 ## Project layout
 
 - `src/data/journey.ts` — all narrative content (edit the story here).
