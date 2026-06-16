@@ -16,7 +16,8 @@ Durable context for the RhoHart portfolio. Update this file whenever structure, 
 | `src/main.tsx` / `src/App.tsx` | Entry point and page composition. |
 | `src/data/journey.ts` | All narrative copy (hero, roles, projects, impact, future). Story lives here. |
 | `src/components/chapters/` | The five narrative chapters (Curiosity, Learning, Systems, Impact, Future). |
-| `src/components/` | Shared UI: `Reveal` (GSAP scroll reveals), `ProgressRail`, `Intro`. |
+| `src/components/` | Shared UI: `Reveal` (enter reveals), `AnimatedText` (word-by-word heading reveals), `Parallax` (scrubbed drift), `ProgressRail`, `Intro`. |
+| `src/hooks/useSmoothScroll.ts` | Dependency-free iOS-style inertia scroll (desktop wheel only; off for touch/reduced-motion). |
 | `src/three/` | 3D scene: `Scene` (canvas + camera rig + static fallback), `NeuralNetwork` (shaders), `buildNetwork` (geometry). |
 | `src/store/scroll.ts` | Framework-agnostic scroll-progress store read by the scene each frame. |
 | `src/hooks/` | `useScrollProgress` (scroll → store) and `useDeviceCapability` (render tier). |
