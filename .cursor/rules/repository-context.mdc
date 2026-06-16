@@ -1,0 +1,16 @@
+---
+description: Repository context for Hart-Portfolio-v2 agents
+alwaysApply: true
+---
+
+# Hart-Portfolio-v2 agent context
+
+Before choosing commands or adding tooling, read:
+
+- `AGENTS.md`
+- `docs/agent-context.md`
+- `README.md`
+
+The repository is currently scaffold-only. Do not assume a framework, package manager, runtime, build command, or test command until those files are introduced and documented.
+
+When implementation adds or changes setup, architecture, verification, or deployment details, update the agent context docs in the same change.
