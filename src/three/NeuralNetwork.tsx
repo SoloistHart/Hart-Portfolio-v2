@@ -19,8 +19,8 @@ const pointVertex = /* glsl */ `
   varying float vActive;
 
   void main() {
-    float active = smoothstep(aBirth - 0.07, aBirth + 0.02, uProgress);
-    vActive = active;
+    float activation = smoothstep(aBirth - 0.07, aBirth + 0.02, uProgress);
+    vActive = activation;
 
     vec3 pos = position;
     pos.x += sin(uTime * 0.3 + aSeed * 6.2831) * 0.05;
@@ -30,13 +30,13 @@ const pointVertex = /* glsl */ `
     gl_Position = projectionMatrix * mvPosition;
 
     float twinkle = 0.75 + 0.25 * sin(uTime * 1.6 + aSeed * 24.0);
-    float size = uSizeScale * aSize * (0.35 + active) * twinkle;
+    float size = uSizeScale * aSize * (0.35 + activation) * twinkle;
     gl_PointSize = size * uPixelRatio * (300.0 / max(0.001, -mvPosition.z));
   }
 `;
 
 const pointFragment = /* glsl */ `
-  precision mediump float;
+  precision highp float;
   uniform float uProgress;
   uniform vec3 uColorA;
   uniform vec3 uColorB;
@@ -72,7 +72,7 @@ const lineVertex = /* glsl */ `
 `;
 
 const lineFragment = /* glsl */ `
-  precision mediump float;
+  precision highp float;
   uniform float uProgress;
   uniform float uTime;
   uniform vec3 uColorA;
