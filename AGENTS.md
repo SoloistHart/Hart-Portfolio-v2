@@ -39,3 +39,10 @@ When those commands are introduced, document them here using this format:
 - Use `.env.example` to document required environment variables without committing secret values.
 - Keep README instructions user-facing and keep detailed agent/build context in `docs/agent-context.md`.
 - Add or revise `.gitignore` entries when adopting new tools that create local output.
+
+## Cursor Cloud specific instructions
+
+- This repository is currently scaffold-only: it contains documentation and config files (`README.md`, `AGENTS.md`, `docs/agent-context.md`, `.editorconfig`, `.gitignore`, `.gitattributes`, `.github/`) but no application source, no dependency manifest (no `package.json`, `requirements.txt`, `pyproject.toml`, etc.), and no framework, build, lint, or test commands.
+- Because there are no dependency manifests, there is nothing to install and no application or test suite to run yet. The only available verification is `git status --short --branch` (see `docs/agent-context.md`).
+- The VM provides `node` (v22.x), `npm`, and `python3` (3.12.x) out of the box, but no stack has been chosen — do not assume or introduce one unless the task asks for it.
+- When a real stack is introduced, document its install/run/verify commands in this file and in `docs/agent-context.md`, and revisit the Cloud Agent update script so it refreshes the new dependencies.
