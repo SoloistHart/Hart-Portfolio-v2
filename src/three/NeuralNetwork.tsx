@@ -52,8 +52,8 @@ const pointFragment = /* glsl */ `
     vec3 col = mix(uColorA, uColorB, smoothstep(0.12, 0.58, uProgress));
     col = mix(col, uColorC, smoothstep(0.6, 0.95, uProgress));
 
-    float alpha = glow * (0.12 + vActive * 0.88);
-    gl_FragColor = vec4(col * (0.7 + glow * 0.6), alpha);
+    float alpha = glow * (0.09 + vActive * 0.62);
+    gl_FragColor = vec4(col * (0.55 + glow * 0.5), alpha);
   }
 `;
 
@@ -94,8 +94,8 @@ const lineFragment = /* glsl */ `
     float pulse =
       smoothstep(0.0, 0.06, p) * (1.0 - smoothstep(0.06, 0.16, p));
 
-    float base = 0.05 * vActive;
-    float intensity = base + pulse * 0.85 * flowStage * vActive;
+    float base = 0.045 * vActive;
+    float intensity = base + pulse * 0.7 * flowStage * vActive;
     gl_FragColor = vec4(col, intensity);
   }
 `;
@@ -133,7 +133,7 @@ export function NeuralNetwork({ quality }: NeuralNetworkProps) {
         uProgress: { value: 0 },
         uTime: { value: 0 },
         uPixelRatio: { value: pixelRatio },
-        uSizeScale: { value: quality === "high" ? 7.0 : 6.0 },
+        uSizeScale: { value: quality === "high" ? 5.5 : 5.0 },
         uColorA: { value: COLOR_CURIOSITY },
         uColorB: { value: COLOR_SYSTEMS },
         uColorC: { value: COLOR_IMPACT },

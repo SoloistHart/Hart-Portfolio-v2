@@ -26,7 +26,23 @@ body {
 
 .story-layer {
   position: relative;
+  z-index: 10;
+}
+
+/* A soft dark scrim between the 3D scene and the text keeps the narrative
+   legible even when bright network clouds drift behind the copy. */
+.readability-scrim {
+  position: fixed;
+  inset: 0;
   z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      120% 90% at 30% 50%,
+      rgba(5, 6, 10, 0.55) 0%,
+      rgba(5, 6, 10, 0.32) 45%,
+      rgba(5, 6, 10, 0.12) 100%
+    );
 }
 
 /* A subtle grain/vignette to ground the holographic scene. */
@@ -54,10 +70,16 @@ body {
 
   .chapter-title {
     @apply font-display text-4xl font-bold leading-[1.05] text-white sm:text-6xl;
+    text-shadow: 0 2px 24px rgba(5, 6, 10, 0.85);
   }
 
   .lede {
-    @apply max-w-2xl text-lg leading-relaxed text-slate-300 sm:text-xl;
+    @apply max-w-2xl text-lg leading-relaxed text-slate-200 sm:text-xl;
+    text-shadow: 0 1px 16px rgba(5, 6, 10, 0.8);
+  }
+
+  .eyebrow {
+    text-shadow: 0 1px 12px rgba(5, 6, 10, 0.8);
   }
 
   .panel {

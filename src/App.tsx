@@ -19,6 +19,7 @@ export default function App() {
     <div className="vignette relative">
       <Intro />
       <Scene tier={capability.tier} />
+      <div className="readability-scrim" aria-hidden="true" />
 
       <header className="fixed left-0 top-0 z-30 flex w-full items-center justify-between px-6 py-5 sm:px-10">
         <span className="font-display text-sm font-semibold tracking-widest2 text-white">
