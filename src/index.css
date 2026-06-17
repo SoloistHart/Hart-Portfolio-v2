@@ -1,0 +1,164 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  /* Per-scene accent, crossfaded as the active chapter changes. */
+  --accent: #38bdf8;
+  --vskew: 0deg;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  @apply bg-ink-950 text-slate-200 font-body antialiased;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/* The 3D canvas is fixed behind the scrolling narrative. */
+.scene-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.story-layer {
+  position: relative;
+  z-index: 10;
+}
+
+/* A soft dark scrim between the 3D scene and the text keeps the narrative
+   legible even when bright network clouds drift behind the copy. */
+.readability-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      120% 90% at 30% 50%,
+      rgba(5, 6, 10, 0.55) 0%,
+      rgba(5, 6, 10, 0.32) 45%,
+      rgba(5, 6, 10, 0.12) 100%
+    );
+}
+
+/* A subtle grain/vignette to ground the holographic scene. */
+.vignette::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    120% 120% at 50% 0%,
+    transparent 55%,
+    rgba(5, 6, 10, 0.85) 100%
+  );
+}
+
+@layer components {
+  .chapter {
+    @apply relative mx-auto flex min-h-screen w-full max-w-5xl flex-col justify-center px-6 py-24 sm:px-10;
+  }
+
+  .eyebrow {
+    @apply font-mono text-xs uppercase tracking-widest2;
+    color: var(--accent);
+    transition: color 0.6s ease;
+  }
+
+  .kinetic {
+    transform: skewY(var(--vskew));
+    transform-origin: left center;
+    will-change: transform;
+  }
+
+  .chapter-title {
+    @apply font-display text-4xl font-bold leading-[1.05] text-white sm:text-6xl;
+    text-shadow: 0 2px 24px rgba(5, 6, 10, 0.85);
+  }
+
+  .lede {
+    @apply max-w-2xl text-lg leading-relaxed text-slate-200 sm:text-xl;
+    text-shadow: 0 1px 16px rgba(5, 6, 10, 0.8);
+  }
+
+  .eyebrow {
+    text-shadow: 0 1px 12px rgba(5, 6, 10, 0.8);
+  }
+
+  .panel {
+    @apply rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-sm transition-colors duration-300;
+  }
+
+  .panel:hover {
+    @apply border-white/20 bg-white/[0.05];
+  }
+
+  .flow-step {
+    @apply font-mono text-xs uppercase tracking-widest text-slate-400;
+  }
+}
+
+/* Custom cursor (desktop / fine pointer only). */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  pointer-events: none;
+  border-radius: 9999px;
+  mix-blend-mode: difference;
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: #ffffff;
+}
+
+.cursor-ring {
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  opacity: var(--opacity, 0.5);
+  transition: opacity 0.3s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  body {
+    cursor: none;
+  }
+  a,
+  button,
+  [data-magnetic],
+  [role="button"] {
+    cursor: none;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
+
+/* Respect users who prefer reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

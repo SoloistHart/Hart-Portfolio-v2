@@ -11,6 +11,8 @@ Before choosing commands or adding tooling, read:
 - `docs/agent-context.md`
 - `README.md`
 
-The repository is currently scaffold-only. Do not assume a framework, package manager, runtime, build command, or test command until those files are introduced and documented.
+The stack is React 18 + TypeScript + Vite + TailwindCSS, with Three.js / @react-three/fiber / @react-three/drei and GSAP + ScrollTrigger for the 3D, scroll-driven experience. Package manager is npm. Standard commands: `npm install`, `npm run dev`, `npm run build`, `npm run lint`.
+
+Story comes first: every change must reinforce the Curiosity → Systems → Impact narrative. Narrative copy lives in `src/data/journey.ts`.
 
 When implementation adds or changes setup, architecture, verification, or deployment details, update the agent context docs in the same change.
