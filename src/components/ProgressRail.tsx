@@ -45,7 +45,7 @@ export function ProgressRail({ activeChapter }: ProgressRailProps) {
             <span
               className={`h-[2px] rounded-full transition-all duration-300 ${
                 active
-                  ? "w-8 bg-curiosity"
+                  ? "w-8 bg-[color:var(--accent)]"
                   : "w-4 bg-white/30 group-hover:bg-white/60"
               }`}
             />

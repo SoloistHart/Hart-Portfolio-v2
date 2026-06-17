@@ -2,21 +2,15 @@ import { useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { NeuralNetwork } from "./NeuralNetwork";
+import { Centerpiece } from "./Centerpiece";
 import { scrollStore } from "../store/scroll";
+import { pointer } from "./pointer";
 import type { RenderTier } from "../hooks/useDeviceCapability";
 
-const pointer = { x: 0, y: 0 };
-if (typeof window !== "undefined") {
-  window.addEventListener("pointermove", (e) => {
-    pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
-    pointer.y = (e.clientY / window.innerHeight) * 2 - 1;
-  });
-}
-
 /**
- * Pans the camera across the network as the story progresses, so the visitor
- * feels like they are travelling forward through an evolving system rather than
- * watching a static object spin.
+ * Gently orbits and dollies the camera around the centerpiece as the story
+ * progresses, so the scene continuously transforms (instead of text scrolling
+ * past a static backdrop).
  */
 function CameraRig() {
   const { camera } = useThree();
@@ -24,21 +18,20 @@ function CameraRig() {
 
   useFrame((_, delta) => {
     const p = scrollStore.progress;
-    const damp = 1 - Math.pow(0.0015, delta);
+    const damp = 1 - Math.pow(0.0016, delta);
 
-    // Travel left -> right across the growing network.
-    const aimX = THREE.MathUtils.lerp(-5.6, 5.6, p);
-    // Pull back slightly through systems, then ease in for the human "impact".
-    const camZ = 9.5 - Math.sin(p * Math.PI) * 1.6;
+    const radius = 9.6 - Math.sin(p * Math.PI) * 1.4; // dolly in mid-journey
+    const angle = (p - 0.5) * 0.7 + pointer.x * 0.28; // orbit with scroll + mouse
 
-    const desiredX = aimX + pointer.x * 0.6;
-    const desiredY = -pointer.y * 0.4 + Math.sin(p * Math.PI) * 0.3;
+    const desiredX = Math.sin(angle) * radius;
+    const desiredZ = Math.cos(angle) * radius;
+    const desiredY = -pointer.y * 0.5 + Math.sin(p * Math.PI) * 0.5;
 
     camera.position.x += (desiredX - camera.position.x) * damp;
     camera.position.y += (desiredY - camera.position.y) * damp;
-    camera.position.z += (camZ - camera.position.z) * damp;
+    camera.position.z += (desiredZ - camera.position.z) * damp;
 
-    target.current.set(aimX, 0, 0);
+    target.current.set(0, 0, 0);
     camera.lookAt(target.current);
   });
 
@@ -54,26 +47,29 @@ export function Scene({ tier }: SceneProps) {
     return <StaticBackdrop />;
   }
 
+  const quality = tier === "high" ? "high" : "low";
+
   return (
     <div className="scene-canvas" aria-hidden="true">
       <Canvas
-        gl={{ antialias: tier === "high", alpha: true, powerPreference: "high-performance" }}
+        gl={{
+          antialias: tier === "high",
+          alpha: true,
+          powerPreference: "high-performance",
+        }}
         dpr={tier === "high" ? [1, 2] : [1, 1.5]}
-        camera={{ position: [-5.6, 0, 9.5], fov: 55, near: 0.1, far: 100 }}
+        camera={{ position: [0, 0, 9.6], fov: 55, near: 0.1, far: 100 }}
       >
         <color attach="background" args={["#05060a"]} />
-        <fog attach="fog" args={["#05060a", 10, 22]} />
+        <fog attach="fog" args={["#05060a", 11, 24]} />
         <CameraRig />
-        <NeuralNetwork quality={tier === "high" ? "high" : "low"} />
+        <Centerpiece quality={quality} />
+        <NeuralNetwork quality={quality} />
       </Canvas>
     </div>
   );
 }
 
-/**
- * CSS-only backdrop used when WebGL is unavailable or the visitor prefers
- * reduced motion. The storytelling must survive even without 3D.
- */
 function StaticBackdrop() {
   return (
     <div

@@ -13,7 +13,7 @@ export function Impact() {
       <AnimatedText
         as="h2"
         text={impact.title}
-        className="chapter-title mb-16 max-w-3xl"
+        className="chapter-title kinetic mb-16 max-w-3xl"
       />
 
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">

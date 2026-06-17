@@ -13,7 +13,7 @@ export function Learning() {
       <AnimatedText
         as="h2"
         text={learning.title}
-        className="chapter-title mb-16 max-w-3xl"
+        className="chapter-title kinetic mb-16 max-w-3xl"
       />
 
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
@@ -21,7 +21,7 @@ export function Learning() {
           <Reveal key={role.title} delay={i * 0.08}>
             <Parallax amount={18 + i * 14}>
               <div className="border-t border-white/15 pt-4">
-                <span className="font-mono text-xs text-curiosity">
+                <span className="font-mono text-xs text-[color:var(--accent)]">
                   {`0${i + 1}`}
                 </span>
                 <h3 className="mt-3 font-display text-xl font-semibold text-white">

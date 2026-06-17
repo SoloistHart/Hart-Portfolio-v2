@@ -16,7 +16,7 @@ export function Curiosity() {
       <AnimatedText
         as="h1"
         text={hero.name}
-        className="chapter-title mb-5"
+        className="chapter-title kinetic mb-5"
         stagger={0.09}
         delay={1.0}
       />

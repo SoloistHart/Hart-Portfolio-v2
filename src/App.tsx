@@ -1,5 +1,6 @@
 import { Scene } from "./three/Scene";
 import { Intro } from "./components/Intro";
+import { Cursor } from "./components/Cursor";
 import { ProgressRail } from "./components/ProgressRail";
 import { Reveal } from "./components/Reveal";
 import { Curiosity } from "./components/chapters/Curiosity";
@@ -10,16 +11,25 @@ import { Future } from "./components/chapters/Future";
 import { useDeviceCapability } from "./hooks/useDeviceCapability";
 import { useScrollProgress } from "./hooks/useScrollProgress";
 import { useSmoothScroll } from "./hooks/useSmoothScroll";
+import { useKineticScroll } from "./hooks/useKineticScroll";
 import { hero } from "./data/journey";
+
+// Per-scene accent colors, crossfaded as the active chapter changes.
+const ACCENTS = ["#38bdf8", "#22d3ee", "#818cf8", "#fb923c", "#f472b6"];
 
 export default function App() {
   const capability = useDeviceCapability();
   const activeChapter = useScrollProgress();
   useSmoothScroll(!capability.prefersReducedMotion);
+  useKineticScroll();
 
   return (
-    <div className="vignette relative">
+    <div
+      className="vignette relative"
+      style={{ ["--accent" as string]: ACCENTS[activeChapter] ?? ACCENTS[0] }}
+    >
       <Intro />
+      <Cursor />
       <Scene tier={capability.tier} />
       <div className="readability-scrim" aria-hidden="true" />
 

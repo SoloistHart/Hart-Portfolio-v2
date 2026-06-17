@@ -13,7 +13,7 @@ export function Systems() {
       <AnimatedText
         as="h2"
         text={systems.title}
-        className="chapter-title mb-10 max-w-3xl"
+        className="chapter-title kinetic mb-10 max-w-3xl"
       />
 
       <Reveal delay={0.1}>

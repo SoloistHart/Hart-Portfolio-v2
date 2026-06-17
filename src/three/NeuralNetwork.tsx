@@ -115,8 +115,8 @@ export function NeuralNetwork({ quality }: NeuralNetworkProps) {
   const { points, lines } = useMemo(() => {
     const data = buildNetwork(
       quality === "high"
-        ? { cloudCount: 1100, maxDegree: 3, linkRadius: 1.5 }
-        : { cloudCount: 380, maxDegree: 2, linkRadius: 1.7 },
+        ? { cloudCount: 760, maxDegree: 3, linkRadius: 1.5 }
+        : { cloudCount: 300, maxDegree: 2, linkRadius: 1.7 },
     );
 
     const pointGeo = new THREE.BufferGeometry();
